@@ -20,18 +20,11 @@
  *         
  */
 const express = require("express");
-
-const UserController = require("../controllers/userController.js");
-
 const router = express.Router();
+// const UserController = require("../controllers/userController.js");
 
-// Create - POST
-router.post("/", UserController.createNewUser);
-
-// Read - GET
-router.get("/", UserController.getAllUsers);
-
-// Update - patch
-router.patch("/:id", UserController.updateUser);
+// router.post("/", UserController.createNewUser);
+// router.get("/", UserController.getAllUsers);
+// router.patch("/:id", UserController.updateUser);
 
 module.exports = router;
