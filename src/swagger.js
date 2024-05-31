@@ -1,5 +1,7 @@
+// const swaggerJsdoc = require('swagger-jsdoc');
+
 const options = {
-  definition: {
+  swaggerDefinition: {
     openapi: "3.0.0",
     info: {
       title: "Melali API",
@@ -9,49 +11,13 @@ const options = {
     servers: [
       {
         url: "http://localhost:4000",
+        description: "Development server",
       },
     ],
-    components: {
-      schemas: {
-        Auth: {
-          type: "object",
-          required: ["email", "password"],
-          properties: {
-            email: {
-              type: "string",
-              description: "User email",
-            },
-            password: {
-              type: "string",
-              description: "User password",
-            },
-          },
-        },
-        User: {
-          type: "object",
-          required: ["id", "name", "email"],
-          properties: {
-            id: {
-              type: "string",
-              description: "User ID",
-            },
-            name: {
-              type: "string",
-              description: "User name",
-            },
-            email: {
-              type: "string",
-              description: "User email",
-            },
-          },
-        },
-
-      },
-    },
-
   },
   apis: ["./routes/*.js"],
 };
 
+// const specs = swaggerJsdoc(options);
 
 module.exports = options;

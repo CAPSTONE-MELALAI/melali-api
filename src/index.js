@@ -1,18 +1,28 @@
 const express = require("express");
-const app = express();
-const options = require("./swagger");
+const dotenv = require("dotenv");
+
+dotenv.config();
+
 const swaggerJsdoc = require("swagger-jsdoc");
 const swaggerUi = require("swagger-ui-express");
-const specs = swaggerJsdoc(options);
-// const userRoutes = require("./routes/userRoutes");
+
+const swaggerOptions = require("./swagger");
+const specs = swaggerJsdoc(swaggerOptions);
+
 const authRoutes = require("./routes/authRoutes");
 
+const process = require("process");
+
+const app = express();
+
 app.use(express.json());
+
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(specs));
 
-app.use("/", authRoutes);
+// Mount authentication routes
+app.use("/auth", authRoutes);
 
-
-app.listen(4000, () => {
-  console.log(`Server is running on port 4000`);
+const PORT = process.env.PORT || 4000;
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
 });

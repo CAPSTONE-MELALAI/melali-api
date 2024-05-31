@@ -1,19 +1,19 @@
-// const jwt = require("jsonwebtoken");
-// const process = require("process"); // Add this line
+const jwtUtils = require('../utils/jwtUtils.js');
 
+const verifyTokenMiddleware = (req, res, next) => {
+  const token = req.headers.authorization;
 
-// const authenticateToken = (req, res, next) => {
-//   const authHeader = req.headers['authorization'];
-//   const token = authHeader && authHeader.split(' ')[1];
-//   if (token == null) return res.sendStatus(401);
+  if (!token) {
+    return res.status(401).json({ msg: 'Token tidak ada' });
+  }
 
-//   jwt.verify(token, process.env.JWT_SECRET, (err, user) => {
-//     if (err) return res.sendStatus(403);
-//     req.user = user;
-//     next();
-//   });
-// };
+  try {
+    const decoded = jwtUtils.verifyToken(token);
+    req.user = decoded;
+    next();
+  } catch (error) {
+    return res.status(403).json({ msg: error.message });
+  }
+};
 
-// module.exports = {
-//   authenticateToken
-// };
+module.exports = verifyTokenMiddleware;
