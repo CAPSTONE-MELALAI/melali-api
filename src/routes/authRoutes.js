@@ -63,7 +63,7 @@
  *           type: string
  *         phoneNumber:
  *           type: string
- * 
+ *
  *     UserLogin:
  *       type: object
  *       properties:
