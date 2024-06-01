@@ -1,6 +1,7 @@
 const argon2 = require("argon2");
 const { firestore } = require("../services/storeData");
 const jwtUtils = require("../utils/jwtUtils");
+// const crypto = require("crypto");
 
 const usersCollection = firestore.collection("users");
 
@@ -15,10 +16,9 @@ const signup = async (req, res) => {
       return res.status(400).json({ msg: "Email sudah digunakan" });
     }
 
-    const id = crypto.randomUUID();
+    // const id = crypto.randomUUID();
     const hashPassword = await argon2.hash(password);
     await usersCollection.add({
-      id: id,
       username,
       email,
       password: hashPassword,
