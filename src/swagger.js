@@ -15,7 +15,9 @@ const options = {
       },
     ],
   },
-  apis: ["./routes/*.js"],
+
+  // eslint-disable-next-line no-undef
+  apis: [`${__dirname}/routes/*.js`]
 };
 
 // const specs = swaggerJsdoc(options);

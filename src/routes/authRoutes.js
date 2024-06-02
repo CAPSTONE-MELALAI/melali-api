@@ -10,7 +10,7 @@
  * /auth/signup:
  *   post:
  *     summary: Register a new user
- *     description: Register a new user with username, email, password, and phone number.
+ *     description: Register a new user with username, email, password, confPassword.
  *     tags: [Authentication]
  *     requestBody:
  *       required: true
@@ -21,6 +21,13 @@
  *     responses:
  *       201:
  *         description: User successfully registered
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 token:
+ *                   type: string
  *       400:
  *         description: Invalid request or user already exists
  */
@@ -41,6 +48,13 @@
  *     responses:
  *       200:
  *         description: User successfully logged in
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 token:
+ *                   type: string
  *       401:
  *         description: Email or password incorrect
  *       500:
@@ -61,14 +75,17 @@
  *           format: email
  *         password:
  *           type: string
- *         phoneNumber:
+ *         confPassword:
  *           type: string
+ *         phoneNumber:
+ *          type: string
  *
  *     UserLogin:
  *       type: object
  *       properties:
- *         username:
+ *         email:
  *           type: string
+ *           format: email
  *         password:
  *           type: string
  */
