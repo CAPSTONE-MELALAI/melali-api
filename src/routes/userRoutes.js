@@ -5,7 +5,7 @@
  *   description: User management endpoints
  */
 
- /**
+/**
  * @swagger
  * /user/{email}:
  *   get:
@@ -19,11 +19,6 @@
  *         description: Email address of the user
  *         schema:
  *           type: string
- *       - in: header
- *         name: Authorization
- *         description: JWT token for user authentication
- *         required: true
- *         type: string
  *     security:
  *       - bearerAuth: []
  *     responses:
@@ -39,7 +34,6 @@
  *         description: Server error
  */
 
-
 /**
  * @swagger
  * /user/{email}:
@@ -54,13 +48,14 @@
  *         description: Email address of the user
  *         schema:
  *           type: string
- *       - in: header
- *         name: Authorization
- *         description: JWT token for user authentication
- *         required: true
- *         type: string
  *     security:
  *       - bearerAuth: []
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/User'
  *     responses:
  *       200:
  *         description: User updated successfully

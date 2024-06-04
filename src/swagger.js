@@ -14,7 +14,22 @@ const options = {
         description: "Development server",
       },
     ],
+    components: {
+      securitySchemes: {
+        bearerAuth: {
+          type: "http",
+          scheme: "bearer",
+          bearerFormat: "JWT",
+        },
+      },
+    },
+    security: [
+      {
+        bearerAuth: [],
+      },
+    ],
   },
+  
 
   // eslint-disable-next-line no-undef
   apis: [`${__dirname}/routes/*.js`]

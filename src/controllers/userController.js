@@ -7,7 +7,7 @@ exports.getUser = async (req, res) => {
     const userQuery = await usersCollection.where("email", "==", userEmail).limit(1).get();
 
     if (userQuery.empty) {
-      return res.status(404).json({ msg: "User not found" });
+      return res.status(404).json({ msg: "Pengguna tidak ditemukan" });
     }
 
     const userDoc = userQuery.docs[0];
@@ -24,13 +24,13 @@ exports.updateUser = async (req, res) => {
     const userQuery = await usersCollection.where("email", "==", userEmail).limit(1).get();
 
     if (userQuery.empty) {
-      return res.status(404).json({ msg: "User not found" });
+      return res.status(404).json({ msg: "Pengguna tidak ditemukan" });
     }
 
     const userDoc = userQuery.docs[0].ref;
     await userDoc.set(userData, { merge: true });
 
-    res.status(200).json({ msg: "User updated successfully" });
+    res.status(200).json({ msg: "Pengguna berhasil diperbarui" });
   } catch (error) {
     res.status(500).json({ msg: "Error updating user: " + error.message });
   }
