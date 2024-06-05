@@ -27,7 +27,23 @@
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/User'
+ *               type: object
+ *               properties:
+ *                 uid:
+ *                   type: string
+ *                 username:
+ *                   type: string
+ *                 email:
+ *                   type: string
+ *                   format: email
+ *                 phoneNumber:
+ *                   type: string
+ *                 createdAt:
+ *                   type: string
+ *                   format: date-time
+ *                 updatedAt:
+ *                   type: string
+ *                   format: date-time
  *       404:
  *         description: User not found
  *       500:
@@ -55,7 +71,12 @@
  *       content:
  *         application/json:
  *           schema:
- *             $ref: '#/components/schemas/User'
+ *             type: object
+ *             properties:
+ *               username:
+ *                 type: string
+ *               phoneNumber:
+ *                 type: string
  *     responses:
  *       200:
  *         description: User updated successfully
@@ -72,6 +93,8 @@
  *     User:
  *       type: object
  *       properties:
+ *         uid:
+ *           type: string
  *         username:
  *           type: string
  *         email:
@@ -81,7 +104,15 @@
  *           type: string
  *         phoneNumber:
  *           type: string
+ *         createdAt:
+ *           type: string
+ *           format: date-time
+ *         updatedAt:
+ *           type: string
+ *           format: date-time
  */
+
+
 
 const express = require("express");
 const router = express.Router();

@@ -18,11 +18,18 @@ const signup = async (req, res) => {
 
     // const id = crypto.randomUUID();
     const hashPassword = await argon2.hash(password);
-    await usersCollection.add({
-      username,
-      email,
-      password: hashPassword,
-      phoneNumber,
+    const now = new Date();
+    const newUserRef = usersCollection.doc();
+    await firestore.runTransaction(async (transaction) => {
+      transaction.set(newUserRef, {
+        uid: newUserRef.id,
+        username,
+        email,
+        password: hashPassword,
+        phoneNumber,
+        createdAt: now,
+        updatedAt: now
+      });
     });
 
     const token = jwtUtils.generateToken({ email: email });
