@@ -57,6 +57,8 @@
  *                   type: string
  *       401:
  *         description: Email or password incorrect
+ *       403:
+ *        description: Permission denied
  *       500:
  *         description: Server error
  */
