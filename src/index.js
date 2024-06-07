@@ -11,6 +11,7 @@ const specs = swaggerJsdoc(swaggerOptions);
 
 const authRoutes = require("./routes/authRoutes");
 const userRoutes = require("./routes/userRoutes");
+const destinationRoutes = require("./routes/destinationRoutes");
 
 const process = require("process");
 
@@ -20,11 +21,11 @@ app.use(express.json());
 
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(specs));
 
-// Mount authentication routes
 app.use("/auth", authRoutes);
 
-// Mount user routes
 app.use("/user", userRoutes);
+
+app.use("/destinations", destinationRoutes);
 
 const PORT = process.env.PORT || 4000;
 app.listen(PORT, () => {

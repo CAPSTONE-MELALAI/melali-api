@@ -3,6 +3,28 @@
  * tags:
  *   name: User
  *   description: User management endpoints
+ * components:
+ *   schemas:
+ *     User:
+ *       type: object
+ *       properties:
+ *         uid:
+ *           type: string
+ *         username:
+ *           type: string
+ *         email:
+ *           type: string
+ *           format: email
+ *         password:
+ *           type: string
+ *         phoneNumber:
+ *           type: string
+ *         createdAt:
+ *           type: string
+ *           format: date-time
+ *         updatedAt:
+ *           type: string
+ *           format: date-time
  */
 
 /**
@@ -85,34 +107,6 @@
  *       500:
  *         description: Server error
  */
-
-/**
- * @swagger
- * components:
- *   schemas:
- *     User:
- *       type: object
- *       properties:
- *         uid:
- *           type: string
- *         username:
- *           type: string
- *         email:
- *           type: string
- *           format: email
- *         password:
- *           type: string
- *         phoneNumber:
- *           type: string
- *         createdAt:
- *           type: string
- *           format: date-time
- *         updatedAt:
- *           type: string
- *           format: date-time
- */
-
-
 
 const express = require("express");
 const router = express.Router();

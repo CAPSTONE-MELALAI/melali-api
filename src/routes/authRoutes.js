@@ -3,6 +3,31 @@
  * tags:
  *   name: Authentication
  *   description: Authentication endpoints
+ * components:
+ *   schemas:
+ *     UserSignup:
+ *       type: object
+ *       properties:
+ *         username:
+ *           type: string
+ *         email:
+ *           type: string
+ *           format: email
+ *         password:
+ *           type: string
+ *         confPassword:
+ *           type: string
+ *         phoneNumber:
+ *          type: string
+ *
+ *     UserLogin:
+ *       type: object
+ *       properties:
+ *         email:
+ *           type: string
+ *           format: email
+ *         password:
+ *           type: string
  */
 
 /**
@@ -61,35 +86,6 @@
  *        description: Permission denied
  *       500:
  *         description: Server error
- */
-
-/**
- * @swagger
- * components:
- *   schemas:
- *     UserSignup:
- *       type: object
- *       properties:
- *         username:
- *           type: string
- *         email:
- *           type: string
- *           format: email
- *         password:
- *           type: string
- *         confPassword:
- *           type: string
- *         phoneNumber:
- *          type: string
- *
- *     UserLogin:
- *       type: object
- *       properties:
- *         email:
- *           type: string
- *           format: email
- *         password:
- *           type: string
  */
 
 const express = require("express");
