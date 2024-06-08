@@ -19,6 +19,10 @@
  *           type: string
  *         phoneNumber:
  *           type: string
+ *         age:
+ *           type: integer
+ *         gender:
+ *           type: string
  *         createdAt:
  *           type: string
  *           format: date-time
@@ -66,6 +70,11 @@
  *                 updatedAt:
  *                   type: string
  *                   format: date-time
+ *                 age:
+ *                   type: integer
+ *                 gender:
+ *                   type: string
+ * 
  *       404:
  *         description: User not found
  *       500:
@@ -98,6 +107,10 @@
  *               username:
  *                 type: string
  *               phoneNumber:
+ *                 type: string
+ *               age:
+ *                 type: integer
+ *               gender:
  *                 type: string
  *     responses:
  *       200:

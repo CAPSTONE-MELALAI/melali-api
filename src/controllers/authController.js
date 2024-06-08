@@ -6,7 +6,7 @@ const jwtUtils = require("../utils/jwtUtils");
 const usersCollection = firestore.collection("users");
 
 const signup = async (req, res) => {
-  const { username, email, password, confPassword, phoneNumber } = req.body;
+  const { username, email, password, confPassword, phoneNumber,} = req.body;
 
   if (password !== confPassword) return res.status(400).json({ msg: "Password dan Confirm Password tidak cocok" });
 
@@ -27,6 +27,8 @@ const signup = async (req, res) => {
         email,
         password: hashPassword,
         phoneNumber,
+        age: null,
+        gender: null,
         createdAt: now,
         updatedAt: now
       });
