@@ -1,7 +1,6 @@
 const argon2 = require("argon2");
 const { firestore } = require("../services/storeData");
 const jwtUtils = require("../utils/jwtUtils");
-// const crypto = require("crypto");
 
 const usersCollection = firestore.collection("users");
 
@@ -16,7 +15,6 @@ const signup = async (req, res) => {
       return res.status(400).json({ msg: "Email sudah digunakan" });
     }
 
-    // const id = crypto.randomUUID();
     const hashPassword = await argon2.hash(password);
     const now = new Date();
     const newUserRef = usersCollection.doc();
@@ -30,13 +28,21 @@ const signup = async (req, res) => {
         age: null,
         gender: null,
         createdAt: now,
-        updatedAt: now
+        updatedAt: now,
       });
     });
 
     const token = jwtUtils.generateToken({ email: email });
 
-    res.status(201).json({ msg: "Akun berhasil dibuat", token: token });
+    res.status(201).json({
+      token: token,
+      uid: newUserRef.id,
+      username: username,
+      email: email,
+      phoneNumber: phoneNumber,
+      createdAt: now,
+      updatedAt: now,
+    });
   } catch (error) {
     res.status(400).json({ msg: error.message });
   }
@@ -58,7 +64,7 @@ const login = async (req, res) => {
 
     const token = jwtUtils.generateToken({ email: email });
 
-    res.status(200).json({ msg: "Login berhasil", token: token });
+    res.status(200).json({ token: token, uid: user.uid, email: user.email, username: user.username, phoneNumber: user.phoneNumber });
   } catch (error) {
     if (error.code === "permission-denied") {
       return res.status(403).json({ msg: "Permission denied" });

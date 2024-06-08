@@ -10,25 +10,34 @@
  *       properties:
  *         uid:
  *           type: string
+ *           example: "1234567890"
  *         username:
  *           type: string
+ *           example: "john_doe"
  *         email:
  *           type: string
  *           format: email
+ *           example: "john.doe@example.com"
  *         password:
  *           type: string
+ *           example: "password123"
  *         phoneNumber:
  *           type: string
+ *           example: "+1234567890"
  *         age:
  *           type: integer
+ *           example: 30
  *         gender:
  *           type: string
+ *           example: "male"
  *         createdAt:
  *           type: string
  *           format: date-time
+ *           example: "2024-05-27T07:21:45.000Z"
  *         updatedAt:
  *           type: string
  *           format: date-time
+ *           example: "2024-06-09T10:15:30.000Z"
  */
 
 /**
@@ -53,28 +62,7 @@
  *         content:
  *           application/json:
  *             schema:
- *               type: object
- *               properties:
- *                 uid:
- *                   type: string
- *                 username:
- *                   type: string
- *                 email:
- *                   type: string
- *                   format: email
- *                 phoneNumber:
- *                   type: string
- *                 createdAt:
- *                   type: string
- *                   format: date-time
- *                 updatedAt:
- *                   type: string
- *                   format: date-time
- *                 age:
- *                   type: integer
- *                 gender:
- *                   type: string
- * 
+ *               $ref: '#/components/schemas/User'
  *       404:
  *         description: User not found
  *       500:
@@ -106,12 +94,16 @@
  *             properties:
  *               username:
  *                 type: string
+ *                 example: "john_doe_updated"
  *               phoneNumber:
  *                 type: string
+ *                 example: "+1234567890"
  *               age:
  *                 type: integer
+ *                 example: 31
  *               gender:
  *                 type: string
+ *                 example: "male"
  *     responses:
  *       200:
  *         description: User updated successfully
