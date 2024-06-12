@@ -18,9 +18,6 @@
  *           type: string
  *           format: email
  *           example: "john.doe@example.com"
- *         password:
- *           type: string
- *           example: "password123"
  *         phoneNumber:
  *           type: string
  *           example: "+1234567890"
@@ -38,6 +35,31 @@
  *           type: string
  *           format: date-time
  *           example: "2024-06-09T10:15:30.000Z"
+ *
+ *     GeneralResponse:
+ *       type: object
+ *       properties:
+ *         success:
+ *           type: boolean
+ *           example: true
+ *         message:
+ *           type: string
+ *           example: Operation successful
+ *         data:
+ *           type: object
+ *           example: {}
+ *
+ *     GetUserResponse:
+ *       allOf:
+ *         - $ref: '#/components/schemas/GeneralResponse'
+ *         - type: object
+ *           properties:
+ *             data:
+ *               $ref: '#/components/schemas/User'
+ *
+ *     UpdateUserResponse:
+ *       allOf:
+ *         - $ref: '#/components/schemas/GeneralResponse'
  */
 
 /**
@@ -62,11 +84,19 @@
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/User'
+ *               $ref: '#/components/schemas/GetUserResponse'
  *       404:
  *         description: User not found
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/GeneralResponse'
  *       500:
  *         description: Server error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/GeneralResponse'
  */
 
 /**
@@ -107,10 +137,22 @@
  *     responses:
  *       200:
  *         description: User updated successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/UpdateUserResponse'
  *       404:
  *         description: User not found
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/GeneralResponse'
  *       500:
  *         description: Server error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/GeneralResponse'
  */
 
 const express = require("express");

@@ -7,12 +7,12 @@ const usersCollection = firestore.collection("users");
 const signup = async (req, res) => {
   const { username, email, password, confPassword, phoneNumber,} = req.body;
 
-  if (password !== confPassword) return res.status(400).json({ msg: "Password dan Confirm Password tidak cocok" });
+  if (password !== confPassword) return res.status(400).json({ success: false, message: "Password dan Confirm Password tidak cocok", data: {} });
 
   try {
     const emailQuery = await usersCollection.where("email", "==", email).limit(1).get();
     if (!emailQuery.empty) {
-      return res.status(400).json({ msg: "Email sudah digunakan" });
+      return res.status(400).json({ success: false, message: "Email sudah digunakan", data: {} });
     }
 
     const hashPassword = await argon2.hash(password);
@@ -35,16 +35,20 @@ const signup = async (req, res) => {
     const token = jwtUtils.generateToken({ email: email });
 
     res.status(201).json({
-      token: token,
-      uid: newUserRef.id,
-      username: username,
-      email: email,
-      phoneNumber: phoneNumber,
-      createdAt: now,
-      updatedAt: now,
+      success: true,
+      message: "User created successfully",
+      data: {
+        token: token,
+        uid: newUserRef.id,
+        username: username,
+        email: email,
+        phoneNumber: phoneNumber,
+        createdAt: now,
+        updatedAt: now,
+      },
     });
   } catch (error) {
-    res.status(400).json({ msg: error.message });
+    res.status(400).json({ success: false, message: error.message, data: {} });
   }
 };
 
@@ -54,22 +58,32 @@ const login = async (req, res) => {
   try {
     const userQuery = await usersCollection.where("email", "==", email).limit(1).get();
     if (userQuery.empty) {
-      return res.status(401).json({ msg: "Email atau password salah" });
+      return res.status(401).json({ success: false, message: "Email atau password salah", data: {} });
     }
     const user = userQuery.docs[0].data();
     const passwordMatch = await argon2.verify(user.password, password);
     if (!passwordMatch) {
-      return res.status(401).json({ msg: "Email atau password salah" });
+      return res.status(401).json({ success: false, message: "Email atau password salah", data: {} });
     }
 
     const token = jwtUtils.generateToken({ email: email });
 
-    res.status(200).json({ token: token, uid: user.uid, email: user.email, username: user.username, phoneNumber: user.phoneNumber });
+    res.status(200).json({
+      success: true,
+      message: "Login successful",
+      data: {
+        token: token,
+        uid: user.uid,
+        email: user.email,
+        username: user.username,
+        phoneNumber: user.phoneNumber,
+      },
+    });
   } catch (error) {
     if (error.code === "permission-denied") {
-      return res.status(403).json({ msg: "Permission denied" });
+      return res.status(403).json({ success: false, message: "Permission denied", data: {} });
     } else {
-      return res.status(500).json({ msg: "Firestore error: " + error.message });
+      return res.status(500).json({ success: false, message: "Firestore error: " + error.message, data: {} });
     }
   }
 };

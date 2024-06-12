@@ -39,54 +39,66 @@
  *     SignupResponse:
  *       type: object
  *       properties:
- *         token:
+ *         success:
+ *           type: boolean
+ *           example: true
+ *         message:
  *           type: string
- *           example: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
- *         uid:
- *           type: string
- *           example: "abc123"
- *         username:
- *           type: string
- *           example: johndoe
- *         email:
- *           type: string
- *           example: johndoe@example.com
- *         phoneNumber:
- *           type: string
- *           example: +6281234567890
- *         createdAt:
- *           type: string
- *           format: date-time
- *           example: "2024-05-27T07:21:45.000Z"
- *         updatedAt:
- *           type: string
- *           format: date-time
- *           example: "2024-05-27T07:21:45.000Z"
+ *           example: User created successfully
+ *         data:
+ *           type: object
+ *           properties:
+ *             token:
+ *               type: string
+ *               example: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+ *             uid:
+ *               type: string
+ *               example: "abc123"
+ *             username:
+ *               type: string
+ *               example: johndoe
+ *             email:
+ *               type: string
+ *               example: johndoe@example.com
+ *             phoneNumber:
+ *               type: string
+ *               example: +6281234567890
+ *             createdAt:
+ *               type: string
+ *               format: date-time
+ *               example: "2024-05-27T07:21:45.000Z"
+ *             updatedAt:
+ *               type: string
+ *               format: date-time
+ *               example: "2024-05-27T07:21:45.000Z"
  *
  *     LoginResponse:
  *       type: object
  *       properties:
- *         token:
+ *         success:
+ *           type: boolean
+ *           example: true
+ *         message:
  *           type: string
- *           example: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
- *         uid:
- *           type: string
- *           example: "abc123"
- *         email:
- *           type: string
- *           example: johndoe@example.com
- *         username:
- *           type: string
- *           example: johndoe
- *         phoneNumber:
- *           type: string
- *           example: +6281234567890
- *         age:
- *           type: integer
- *           example: 25
- *         gender:
- *           type: string
- *           example: male
+ *           example: Login successful
+ *         data:
+ *           type: object
+ *           properties:
+ *             token:
+ *               type: string
+ *               example: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+ *             uid:
+ *               type: string
+ *               example: "abc123"
+ *             email:
+ *               type: string
+ *               example: johndoe@example.com
+ *             username:
+ *               type: string
+ *               example: johndoe
+ *             phoneNumber:
+ *               type: string
+ *               example: +6281234567890
  */
 
 /**
@@ -94,7 +106,7 @@
  * /auth/signup:
  *   post:
  *     summary: Register a new user
- *     description: Register a new user with username, email, password, confPassword, phoneNumber, gender, and age.
+ *     description: Register a new user with username, email, password, confPassword, phoneNumber.
  *     tags: [Authentication]
  *     requestBody:
  *       required: true
@@ -111,6 +123,20 @@
  *               $ref: '#/components/schemas/SignupResponse'
  *       400:
  *         description: Invalid request or user already exists
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                   example: false
+ *                 message:
+ *                   type: string
+ *                   example: "Password dan Confirm Password tidak cocok"
+ *                 data:
+ *                   type: object
+ *                   example: {}
  */
 
 /**
@@ -135,10 +161,52 @@
  *               $ref: '#/components/schemas/LoginResponse'
  *       401:
  *         description: Email or password incorrect
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                   example: false
+ *                 message:
+ *                   type: string
+ *                   example: "Email atau password salah"
+ *                 data:
+ *                   type: object
+ *                   example: {}
  *       403:
  *         description: Permission denied
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                   example: false
+ *                 message:
+ *                   type: string
+ *                   example: "Permission denied"
+ *                 data:
+ *                   type: object
+ *                   example: {}
  *       500:
  *         description: Server error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                   example: false
+ *                 message:
+ *                   type: string
+ *                   example: "Firestore error: <error_message>"
+ *                 data:
+ *                   type: object
+ *                   example: {}
  */
 
 const express = require("express");

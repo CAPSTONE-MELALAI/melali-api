@@ -7,16 +7,20 @@ const getUser = async (req, res) => {
     const userQuery = await usersCollection.where("email", "==", userEmail).limit(1).get();
 
     if (userQuery.empty) {
-      return res.status(404).json({ msg: "Pengguna tidak ditemukan" });
+      return res.status(404).json({ success: false, message: "Pengguna tidak ditemukan", data: {} });
     }
 
     const userDoc = userQuery.docs[0];
     const userData = userDoc.data();
     userData.uid = userDoc.id;
 
-    res.status(200).json(userDoc.data());
+    res.status(200).json({
+      success: true,
+      message: "Pengguna ditemukan",
+      data: userData,
+    });
   } catch (error) {
-    res.status(500).json({ msg: "Error getting user: " + error.message });
+    res.status(500).json({ success: false, message: "Error getting user: " + error.message, data: {} });
   }
 };
 
@@ -28,15 +32,15 @@ const updateUser = async (req, res) => {
     const userQuery = await usersCollection.where("email", "==", userEmail).limit(1).get();
 
     if (userQuery.empty) {
-      return res.status(404).json({ msg: "Pengguna tidak ditemukan" });
+      return res.status(404).json({ success: false, message: "Pengguna tidak ditemukan", data: {} });
     }
 
     const userDoc = userQuery.docs[0].ref;
     await userDoc.set(userData, { merge: true });
 
-    res.status(200).json({ msg: "Pengguna berhasil diperbarui" });
+    res.status(200).json({ success: true, message: "Pengguna berhasil diperbarui", data: {} });
   } catch (error) {
-    res.status(500).json({ msg: "Error updating user: " + error.message });
+    res.status(500).json({ success: false, message: "Error updating user: " + error.message, data: {} });
   }
 };
 

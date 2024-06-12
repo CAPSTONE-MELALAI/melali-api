@@ -68,6 +68,37 @@
  *         - Place
  *         - Source
  *         - Location
+ * 
+ *     GeneralResponse:
+ *       type: object
+ *       properties:
+ *         success:
+ *           type: boolean
+ *           example: true
+ *         message:
+ *           type: string
+ *           example: Operation successful
+ *         data:
+ *           type: object
+ *           example: {}
+ * 
+ *     GetAllDestinationsResponse:
+ *       allOf:
+ *         - $ref: '#/components/schemas/GeneralResponse'
+ *         - type: object
+ *           properties:
+ *             data:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/Destination'
+ * 
+ *     GetDestinationResponse:
+ *       allOf:
+ *         - $ref: '#/components/schemas/GeneralResponse'
+ *         - type: object
+ *           properties:
+ *             data:
+ *               $ref: '#/components/schemas/Destination'
  */
 
 /**
@@ -82,19 +113,13 @@
  *         content:
  *           application/json:
  *             schema:
- *               type: array
- *               items:
- *                 $ref: '#/components/schemas/Destination'
+ *               $ref: '#/components/schemas/GetAllDestinationsResponse'
  *       500:
  *         description: Server error
  *         content:
  *           application/json:
  *             schema:
- *               type: object
- *               properties:
- *                 msg:
- *                   type: string
- *                   example: "Error getting destinations: some error message"
+ *               $ref: '#/components/schemas/GeneralResponse'
  */
 
 /**
@@ -117,27 +142,19 @@
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Destination'
+ *               $ref: '#/components/schemas/GetDestinationResponse'
  *       404:
  *         description: Destination not found
  *         content:
  *           application/json:
  *             schema:
- *               type: object
- *               properties:
- *                 msg:
- *                   type: string
- *                   example: "Destination not found"
+ *               $ref: '#/components/schemas/GeneralResponse'
  *       500:
  *         description: Server error
  *         content:
  *           application/json:
  *             schema:
- *               type: object
- *               properties:
- *                 msg:
- *                   type: string
- *                   example: "Error getting destination: some error message"
+ *               $ref: '#/components/schemas/GeneralResponse'
  */
 
 const express = require("express");
