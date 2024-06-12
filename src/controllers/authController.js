@@ -1,11 +1,15 @@
 const argon2 = require("argon2");
 const { firestore } = require("../services/storeData");
 const jwtUtils = require("../utils/jwtUtils");
+const process = require("process");
 
 const usersCollection = firestore.collection("users");
+const secretKey = process.env.SECRET_KEY;
+console.log("Secret Key:", process.env.SECRET_KEY);
+
 
 const signup = async (req, res) => {
-  const { username, email, password, confPassword, phoneNumber,} = req.body;
+  const { username, email, password, confPassword, phoneNumber } = req.body;
 
   if (password !== confPassword) return res.status(400).json({ success: false, message: "Password dan Confirm Password tidak cocok", data: {} });
 
@@ -32,7 +36,7 @@ const signup = async (req, res) => {
       });
     });
 
-    const token = jwtUtils.generateToken({ email: email });
+    const token = jwtUtils.generateToken({ email: email }, secretKey); // Menggunakan secretKey
 
     res.status(201).json({
       success: true,
@@ -56,10 +60,13 @@ const login = async (req, res) => {
   const { email, password } = req.body;
 
   try {
+    console.log("Starting login process for email:", email);
+
     const userQuery = await usersCollection.where("email", "==", email).limit(1).get();
     if (userQuery.empty) {
       return res.status(401).json({ success: false, message: "Email atau password salah", data: {} });
     }
+
     const user = userQuery.docs[0].data();
     const passwordMatch = await argon2.verify(user.password, password);
     if (!passwordMatch) {
@@ -67,6 +74,7 @@ const login = async (req, res) => {
     }
 
     const token = jwtUtils.generateToken({ email: email });
+    console.log("Token generated for email:", email);
 
     res.status(200).json({
       success: true,
@@ -80,6 +88,7 @@ const login = async (req, res) => {
       },
     });
   } catch (error) {
+    console.error("Error during login process:", error);
     if (error.code === "permission-denied") {
       return res.status(403).json({ success: false, message: "Permission denied", data: {} });
     } else {
@@ -87,6 +96,7 @@ const login = async (req, res) => {
     }
   }
 };
+
 
 module.exports = {
   login,

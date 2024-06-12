@@ -1,0 +1,8 @@
+runtime: nodejs20
+
+env_variables:
+  SECRET_KEY: emPw4dDsYThQ5MiIXN0CLxp0rt2SVlOomP01wUIXaMg=
+
+handlers:
+- url: /.*
+  script: auto

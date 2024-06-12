@@ -4,5 +4,5 @@ node_modules
 # debug
 npm-debug.log*
 
-.env
+# .env
 service-account.json
