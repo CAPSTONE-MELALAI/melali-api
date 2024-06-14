@@ -1,4 +1,4 @@
-const recommendationService = require('../services/recommendation');
+const recommendationService = require('../services/predict');
 
 exports.getSchedule = async (req, res) => {
     const { location, category, cost, foodHalal } = req.body;

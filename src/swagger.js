@@ -9,12 +9,12 @@ const options = {
       description: "Melali API",
     },
     servers: [
+      // {
+      //   url: "https://capstone-melali.et.r.appspot.com/",
+      //   description: "Development server",
+      // },
       {
-        url: "https://capstone-melali.et.r.appspot.com/",
-        description: "Development server",
-      },
-      {
-        url: "http://localhost:4000",
+        url: "http://localhost:4000/",
         description: "Development server",
       },
     ],

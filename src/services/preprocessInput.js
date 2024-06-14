@@ -1,16 +1,34 @@
 const tf = require('@tensorflow/tfjs-node');
+const { tourismId } = require('../utils/constants');
 
-function preprocessInput(location, category, cost, foodHalal) {
-    // Assume inputs are integers corresponding to embedding indices
-    const locationTensor = tf.tensor2d([location], [1, 1]);
-    const categoryTensor = tf.tensor2d([category], [1, 1]);
-    const costTensor = tf.tensor2d([cost], [1, 1]);
-    const foodHalalTensor = tf.tensor2d([foodHalal], [1, 1]);
+function prepareInput(userIdArray) {
+    try {
+        // Memastikan userIdArray adalah array
+        if (!Array.isArray(userIdArray)) {
+            throw new Error('userIdArray harus berupa array');
+        }
 
-    // Combine tensors into a single input tensor
-    const inputTensor = tf.concat([locationTensor, categoryTensor, costTensor, foodHalalTensor], 1);
+        // Memastikan setiap elemen di dalam userIdArray adalah bilangan bulat
+        for (let i = 0; i < userIdArray.length; i++) {
+            if (typeof userIdArray[i] !== 'number' || !Number.isInteger(userIdArray[i])) {
+                throw new Error('Setiap elemen dalam userIdArray harus merupakan bilangan bulat');
+            }
+        }
 
-    return inputTensor;
+        // Buat tensor untuk userInput dari userIdArray
+        const userInput = tf.tensor2d(userIdArray, [userIdArray.length, 1]);
+
+        // Buat tensor untuk tourismInput dari tourismId
+        const tourismInput = tf.tensor2d(tourismId, [tourismId.length, 1]);
+
+        console.log('Prepared input:', { userInput, tourismInput });
+        return { userInput, tourismInput };
+    } catch (error) {
+        console.error('Error preparing input:', error);
+        throw error;
+    }
 }
 
-module.exports = preprocessInput;
+module.exports = {
+    prepareInput,
+};
