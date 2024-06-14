@@ -10,11 +10,11 @@ const options = {
     },
     servers: [
       {
-        url: "https://melali-backend.et.r.appspot.com/",
+        url: "https://capstone-melali.et.r.appspot.com/",
         description: "Development server",
       },
       {
-        url: "https://4000-cs-629477728142-default.cs-asia-southeast1-ajrg.cloudshell.dev/",
+        url: "http://localhost:4000",
         description: "Development server",
       },
     ],
