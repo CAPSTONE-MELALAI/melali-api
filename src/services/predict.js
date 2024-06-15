@@ -6,6 +6,10 @@ const predict = async (userIds, tourismIds, model) => {
         console.log('User IDs:', userIds);
         console.log('Tourism IDs:', tourismIds);
 
+        if (!model) {
+            throw new Error('Model is undefined');
+        }
+
         const userInput = tf.tensor2d(userIds, [10, 1]);
         const tourismInput = tf.tensor2d(tourismIds, [10, 1]);
 
@@ -27,6 +31,4 @@ const predict = async (userIds, tourismIds, model) => {
     }
 };
 
-module.exports = {
-    predict,
-};
+module.exports = predict;
