@@ -9,9 +9,15 @@ console.log("Secret Key:", process.env.SECRET_KEY);
 
 
 const signup = async (req, res) => {
-  const { username, email, password, confPassword, phoneNumber } = req.body;
+  const { username, email, password, confPassword, phoneNumber, category } = req.body;
 
-  if (password !== confPassword) return res.status(400).json({ success: false, message: "Password dan Confirm Password tidak cocok", data: {} });
+  if (password !== confPassword) {
+    return res.status(400).json({ success: false, message: "Password dan Confirm Password tidak cocok", data: {} });
+  }
+
+  if (!Array.isArray(category) || category.length === 0 || category.some((val) => ![0, 1, 2, 3, 4].includes(val))) {
+    return res.status(400).json({ success: false, message: "Category harus berupa list of integer dengan nilai antara 0-4 dan tidak boleh kosong", data: {} });
+  }
 
   try {
     const emailQuery = await usersCollection.where("email", "==", email).limit(1).get();
@@ -21,6 +27,13 @@ const signup = async (req, res) => {
 
     const hashPassword = await argon2.hash(password);
     const now = new Date();
+
+    const lastUserQuery = await usersCollection.orderBy("indexUser", "desc").limit(1).get();
+    let newIndexUser = 1;
+    if (!lastUserQuery.empty) {
+      newIndexUser = lastUserQuery.docs[0].data().indexUser + 1;
+    }
+
     const newUserRef = usersCollection.doc();
     await firestore.runTransaction(async (transaction) => {
       transaction.set(newUserRef, {
@@ -33,6 +46,8 @@ const signup = async (req, res) => {
         gender: null,
         createdAt: now,
         updatedAt: now,
+        indexUser: newIndexUser,
+        category: category,
       });
     });
 
@@ -49,6 +64,8 @@ const signup = async (req, res) => {
         phoneNumber: phoneNumber,
         createdAt: now,
         updatedAt: now,
+        indexUser: newIndexUser,
+        category: category,
       },
     });
   } catch (error) {

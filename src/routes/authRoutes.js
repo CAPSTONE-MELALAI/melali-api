@@ -24,6 +24,12 @@
  *         phoneNumber:
  *           type: string
  *           example: +6281234567890
+ *         category:
+ *           type: array
+ *           items:
+ *             type: integer
+ *             enum: [0, 1, 2, 3, 4]
+ *           example: [0, 1, 2, 3, 4]
  *
  *     UserLogin:
  *       type: object
@@ -71,6 +77,15 @@
  *               type: string
  *               format: date-time
  *               example: "2024-05-27T07:21:45.000Z"
+ *             indexUser:
+ *               type: integer
+ *               example: 1
+ *             category:
+ *               type: array
+ *               items:
+ *                 type: integer
+ *                 enum: [0, 1, 2, 3, 4]
+ *               example: [0, 1, 2, 3, 4]
  *
  *     LoginResponse:
  *       type: object
@@ -106,7 +121,7 @@
  * /auth/signup:
  *   post:
  *     summary: Register a new user
- *     description: Register a new user with username, email, password, confPassword, phoneNumber.
+ *     description: Register a new user with username, email, password, confPassword, phoneNumber, and category.
  *     tags: [Authentication]
  *     requestBody:
  *       required: true
