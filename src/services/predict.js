@@ -1,33 +1,32 @@
-const { loadModel } = require('./loadModel');
-const { prepareInput } = require('./preprocessInput');
-const { tourismId } = require('../utils/constants');
+const tf = require('@tensorflow/tfjs-node');
 
-async function predict(userIdArray, model) {
+const predict = async (userIds, tourismIds, model) => {
     try {
-        // Load the model
-        // const model = loadModel();
-        // if (!model) {
-        //     throw new Error('Model not loaded');
-        // }
+        console.log('Starting prediction...');
+        console.log('User IDs:', userIds);
+        console.log('Tourism IDs:', tourismIds);
 
-        // Prepare input tensors
-        const { userInput, tourismInput } = prepareInput(userIdArray, tourismId);
+        const userInput = tf.tensor2d(userIds, [10, 1]);
+        const tourismInput = tf.tensor2d(tourismIds, [10, 1]);
 
-        // Perform prediction
-        const prediction = loadModel(model).predict([userInput, tourismInput]);
-        const score = await prediction.data();
+        console.log('User Input Tensor:', userInput.arraySync());
+        console.log('Tourism Input Tensor:', tourismInput.arraySync());
 
-        // Log prediction result
-        console.log('Prediction tensor:', prediction);
-        console.log('Prediction score:', score);
+        const predictions = model.predict([userInput, tourismInput]);
+        const ratings = await predictions.array();
 
-        // Return the prediction score
-        return score[0];
+        console.log('Predictions:', ratings);
 
+        const finalRatings = ratings.map(rating => rating[0]);
+        console.log('Final Ratings:', finalRatings);
+
+        return finalRatings;
     } catch (error) {
-        console.error('Error in predict function:', error);
+        console.log('Error in predict function:', error);
         throw error;
     }
-}
+};
 
-module.exports = predict;
+module.exports = {
+    predict,
+};

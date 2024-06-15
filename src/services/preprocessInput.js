@@ -1,34 +1,37 @@
-const tf = require('@tensorflow/tfjs-node');
-const { tourismId } = require('../utils/constants');
+// const tf = require('@tensorflow/tfjs-node');
+// const { tourismId } = require('../utils/constants');
+// const { predictController } = require('../controllers/predictController');
 
-function prepareInput(userIdArray) {
-    try {
-        // Memastikan userIdArray adalah array
-        if (!Array.isArray(userIdArray)) {
-            throw new Error('userIdArray harus berupa array');
-        }
+// function prepareInput() {
+//     try {
+//         const userId = predictController.userIdArray;
+//         const placeId = tourismId.tourismId;
+//         // Memastikan userIdArray adalah array
+//         if (!Array.isArray(userId)) {
+//             throw new Error('userIdArray harus berupa array');
+//         }
 
-        // Memastikan setiap elemen di dalam userIdArray adalah bilangan bulat
-        for (let i = 0; i < userIdArray.length; i++) {
-            if (typeof userIdArray[i] !== 'number' || !Number.isInteger(userIdArray[i])) {
-                throw new Error('Setiap elemen dalam userIdArray harus merupakan bilangan bulat');
-            }
-        }
+//         // Memastikan setiap elemen di dalam userIdArray adalah bilangan bulat
+//         for (let i = 0; i < userId.length; i++) {
+//             if (typeof userId[i] !== 'number' || !Number.isInteger(userId[i])) {
+//                 throw new Error('Setiap elemen dalam userIdArray harus merupakan bilangan bulat');
+//             }
+//         }
 
-        // Buat tensor untuk userInput dari userIdArray
-        const userInput = tf.tensor2d(userIdArray, [userIdArray.length, 1]);
+//         // Buat tensor untuk userInput dari userIdArray
+//         const userInput = tf.tensor2d(userId, [userId.length, 1]);
 
-        // Buat tensor untuk tourismInput dari tourismId
-        const tourismInput = tf.tensor2d(tourismId, [tourismId.length, 1]);
+//         // Buat tensor untuk tourismInput dari tourismId
+//         const tourismInput = tf.tensor2d(placeId, [tourismId.length, 1]);
 
-        console.log('Prepared input:', { userInput, tourismInput });
-        return { userInput, tourismInput };
-    } catch (error) {
-        console.error('Error preparing input:', error);
-        throw error;
-    }
-}
+//         console.log('Prepared input:', { userInput, tourismInput });
+//         return { userInput, tourismInput };
+//     } catch (error) {
+//         console.error('Error preparing input:', error);
+//         throw error;
+//     }
+// }
 
-module.exports = {
-    prepareInput,
-};
+// module.exports = {
+//     prepareInput,
+// };

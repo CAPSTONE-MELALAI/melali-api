@@ -2,7 +2,7 @@
  * @swagger
  * /predict:
  *   post:
- *     summary: Get a tourism recommendation based on userId
+ *     summary: Get a tourism recommendation based on userId and tourismId
  *     requestBody:
  *       required: true
  *       content:
@@ -10,29 +10,31 @@
  *           schema:
  *             type: object
  *             required:
- *               - userId
+ *               - userIds
+ *               - tourismIds
  *             properties:
- *               userId:
- *                 type: integer
- *                 description: ID of the user
- *                 example: 1
+ *               userIds:
+ *                 type: array
+ *                 items:
+ *                   type: integer
+ *                 description: Array of user IDs
+ *                 example: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
+ *               tourismIds:
+ *                 type: array
+ *                 items:
+ *                   type: integer
+ *                 description: Array of tourism IDs
+ *                 example: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
  *     responses:
  *       200:
  *         description: Successful response with prediction
  *         content:
  *           application/json:
  *             schema:
- *               type: object
- *               properties:
- *                 userId:
- *                   type: integer
- *                   description: ID of the user
- *                 tourismId:
- *                   type: integer
- *                   description: ID of the tourism (static)
- *                 prediction:
- *                   type: number
- *                   description: Predicted score
+ *               type: array
+ *               items:
+ *                 type: number
+ *                 description: Predicted scores
  *       400:
  *         description: Bad request
  *       500:
@@ -44,6 +46,6 @@ const predictController = require('../controllers/predictController');
 
 const router = express.Router();
 
-router.post('/', predictController.predictController);
+router.post('/', predictController.predictRatings);
 
 module.exports = router;

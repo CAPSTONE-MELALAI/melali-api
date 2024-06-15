@@ -16,7 +16,7 @@ const predictRoutes = require("./routes/predictRoutes");
 
 const app = express();
 const process = require("process");
-const loadModel = require("./services/loadModel");
+const model = require("./services/loadModel");
 
 app.use(express.json());
 
@@ -28,7 +28,7 @@ app.use("/destinations", destinationRoutes);
 app.use("/predict", predictRoutes);
 
 app.use((req, res, next) => {
-  req.models = {loadModel};
+  req.models = {model};
   next();
 });
 // app.use("/schedule", scheduleRoutes);
