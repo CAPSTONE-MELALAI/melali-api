@@ -48,3 +48,7 @@ const getDestination = async (req, res) => {
   }
 };
 
+module.exports = {
+  getAllDestinations,
+  getDestination,
+};
