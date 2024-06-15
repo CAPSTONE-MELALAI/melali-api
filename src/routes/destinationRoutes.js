@@ -68,7 +68,7 @@
  *         - Place
  *         - Source
  *         - Location
- * 
+ *
  *     GeneralResponse:
  *       type: object
  *       properties:
@@ -81,7 +81,7 @@
  *         data:
  *           type: object
  *           example: {}
- * 
+ *
  *     GetAllDestinationsResponse:
  *       allOf:
  *         - $ref: '#/components/schemas/GeneralResponse'
@@ -91,7 +91,7 @@
  *               type: array
  *               items:
  *                 $ref: '#/components/schemas/Destination'
- * 
+ *
  *     GetDestinationResponse:
  *       allOf:
  *         - $ref: '#/components/schemas/GeneralResponse'
