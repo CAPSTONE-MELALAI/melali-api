@@ -21,19 +21,23 @@ const getAllDestinations = async (req, res) => {
 
 const getDestination = async (req, res) => {
   try {
-    const destinationId = req.params.id;
-    const destinationQuery = await destinationsCollection.doc(destinationId).get();
-    if (!destinationQuery.exists) {
+    const index = parseInt(req.params.index);
+    const destinationsQuery = await destinationsCollection.where('index', '==', index).get();
+
+    if (destinationsQuery.empty) {
       return res.status(404).json({
         success: false,
         message: 'Destination not found',
         data: {},
       });
     }
+
+    const destinationData = destinationsQuery.docs[0].data();
+
     res.status(200).json({
       success: true,
       message: 'Destination retrieved successfully',
-      data: destinationQuery.data(),
+      data: destinationData,
     });
   } catch (error) {
     res.status(500).json({
@@ -42,6 +46,7 @@ const getDestination = async (req, res) => {
       data: {},
     });
   }
-}
+};
+
 
 module.exports = { getAllDestinations, getDestination};

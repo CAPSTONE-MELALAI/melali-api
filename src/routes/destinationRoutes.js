@@ -157,12 +157,13 @@
  *               $ref: '#/components/schemas/GeneralResponse'
  */
 
-const express = require("express");
+const express = require('express');
 const router = express.Router();
 
-const destinationController = require("../controllers/destinationController");
+const destinationController = require('../controllers/destinationController');
 
-router.get("/", destinationController.getAllDestinations);
-router.get("/:id", destinationController.getDestination);
+// Menggunakan '/:index' sebagai bagian dari path untuk endpoint getDestination
+router.get('/:index', destinationController.getDestination);
+router.get('/', destinationController.getAllDestinations); // Tetap mempertahankan route sebelumnya
 
 module.exports = router;
