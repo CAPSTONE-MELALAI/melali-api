@@ -61,11 +61,14 @@ const signup = async (req, res) => {
         uid: newUserRef.id,
         username: username,
         email: email,
+        password: hashPassword,
         phoneNumber: phoneNumber,
-        createdAt: now,
-        updatedAt: now,
+        age: null,
+        gender: null,
         indexUser: newIndexUser,
         category: category,
+        createdAt: now,
+        updatedAt: now,
       },
     });
   } catch (error) {
@@ -99,9 +102,16 @@ const login = async (req, res) => {
       data: {
         token: token,
         uid: user.uid,
-        email: user.email,
         username: user.username,
+        email: user.email,
+        password: user.password,
         phoneNumber: user.phoneNumber,
+        age: user.age,
+        gender: user.gender,
+        indexUser: user.indexUser,
+        category: user.category,
+        createdAt: user.createdAt,
+        updatedAt: user.updatedAt,
       },
     });
   } catch (error) {

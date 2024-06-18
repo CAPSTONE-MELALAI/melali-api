@@ -1,34 +1,28 @@
 const tf = require('@tensorflow/tfjs-node');
+const loadModel = require('./loadModel');
 
-const predict = async (userIds, tourismIds, model) => {
-    try {
-        console.log('Starting prediction...');
-        console.log('User IDs:', userIds);
-        console.log('Tourism IDs:', tourismIds);
+let modelPromise;
 
-        if (!model) {
-            throw new Error('Model is undefined');
-        }
-
-        const userInput = tf.tensor2d(userIds, [10, 1]);
-        const tourismInput = tf.tensor2d(tourismIds, [10, 1]);
-
-        console.log('User Input Tensor:', userInput.arraySync());
-        console.log('Tourism Input Tensor:', tourismInput.arraySync());
-
-        const predictions = model.predict([userInput, tourismInput]);
-        const ratings = await predictions.array();
-
-        console.log('Predictions:', ratings);
-
-        const finalRatings = ratings.map(rating => rating[0]);
-        console.log('Final Ratings:', finalRatings);
-
-        return finalRatings;
-    } catch (error) {
-        console.log('Error in predict function:', error);
-        throw error;
+// Function to get model instance (lazy initialization)
+async function getModel() {
+    if (!modelPromise) {
+        modelPromise = loadModel();
     }
-};
+    return modelPromise;
+}
+
+// Function to perform prediction
+async function predict(tourismInput, userInput) {
+    const model = await getModel();
+
+    // Convert input to tensors
+    const tourismInputTensor = tf.tensor2d([[parseFloat(tourismInput)]]);
+    const userInputTensor = tf.tensor2d([[parseFloat(userInput)]]);
+
+    // Perform prediction
+    const prediction = await model.predict([tourismInputTensor, userInputTensor]).data();
+    
+    return prediction[0]; // Assuming output is a single value
+}
 
 module.exports = predict;

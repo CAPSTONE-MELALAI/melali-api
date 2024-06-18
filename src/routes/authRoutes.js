@@ -66,6 +66,9 @@
  *             email:
  *               type: string
  *               example: johndoe@example.com
+ *             password:
+ *               type: string
+ *               example: "$argon2id$v=19$m=65536,t=3,p=4$CI3zbz6i/dp0Bbdks3R0bQ$yQPSFOcn1Br+uytmokNjO4+d9S1M0YVjThkjFQP9OpM"
  *             phoneNumber:
  *               type: string
  *               example: +6281234567890
@@ -111,9 +114,29 @@
  *             username:
  *               type: string
  *               example: johndoe
+ *             password:
+ *               type: string
+ *               example: "$argon2id$v=19$m=65536,t=3,p=4$CI3zbz6i/dp0Bbdks3R0bQ$yQPSFOcn1Br+uytmokNjO4+d9S1M0YVjThkjFQP9OpM"
  *             phoneNumber:
  *               type: string
  *               example: +6281234567890
+ *             createdAt:
+ *               type: string
+ *               format: date-time
+ *               example: "2024-05-27T07:21:45.000Z"
+ *             updatedAt:
+ *               type: string
+ *               format: date-time
+ *               example: "2024-05-27T07:21:45.000Z"
+ *             indexUser:
+ *               type: integer
+ *               example: 1
+ *             category:
+ *               type: array
+ *               items:
+ *                 type: integer
+ *                 enum: [0, 1, 2, 3, 4]
+ *               example: [0, 1, 2, 3, 4]
  */
 
 /**
